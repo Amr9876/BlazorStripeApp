@@ -42,6 +42,11 @@
 
                     </MudStack>
 
+                    @if (!string.IsNullOrEmpty(message))
+                    {
+                        <MudText Color="Color.Error">@message</MudText>
+                    }
+
                     <LoadingButton Loading="@loading">Pay Now</LoadingButton>
                 </MudStack>
             </EditForm>
