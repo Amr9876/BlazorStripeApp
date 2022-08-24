@@ -1,0 +1,59 @@
+﻿@page "/checkout"
+
+@if (string.IsNullOrEmpty(Status))
+{
+    <MudStack>
+        <MudPaper Class="pa-4">
+            <MudStack Row="true">
+                <MudAvatar Image="@product.Images[0]" Size="Size.Large" />
+                <MudStack Justify="Justify.Center" Spacing="0">
+                    <MudText Typo="Typo.body1">@product.Name</MudText>
+                    <MudText Typo="Typo.body2">@product.Description</MudText>
+                </MudStack>
+            </MudStack>
+        </MudPaper>
+
+        <MudPaper Class="pa-4">
+            <EditForm Model="card" OnValidSubmit="Submit">
+                <DataAnnotationsValidator />
+
+                <MudStack Spacing="4">
+
+                    <MudTextField @bind-Value="card.CardNumber" T="string" Label="Card number" Mask="@(new PatternMask("0000 0000 0000 0000"))" />
+                    <MudText Color="Color.Error">
+                        <ValidationMessage For="() => card.CardNumber" />
+                    </MudText>
+
+                    <MudStack Row="true">
+
+                        <MudStack>
+                            <MudTextField @bind-Value="card.Expires" T="string" Label="Expires" Mask="@(new DateMask("MM/YY", 'Y', 'M'))" />
+                            <MudText Color="Color.Error">
+                                <ValidationMessage For="() => card.Expires" />
+                            </MudText>
+                        </MudStack>
+
+                        <MudStack>
+                            <MudTextField @bind-Value="card.Cvc" T="string" Label="CVC" Mask="@(new PatternMask("000"))" />
+                            <MudText Color="Color.Error">
+                                <ValidationMessage For="() => card.Cvc" />
+                            </MudText>
+                        </MudStack>
+
+                    </MudStack>
+
+                    <LoadingButton Loading="@loading">Pay Now</LoadingButton>
+                </MudStack>
+            </EditForm>
+        </MudPaper>
+    </MudStack>
+} else 
+{
+    <MudText 
+        Color="@(Status == "success" ? Color.Success : Color.Error)"
+        Align="Align.Center" 
+        Typo="Typo.h2" 
+        Class="ma-8">
+        @(Status == "success" ? "Thanks for your payment" : "Error occured please try again later")
+    </MudText>
+}

@@ -1,0 +1,16 @@
+﻿@inherits LayoutComponentBase
+@inject ThemeProviderService _themeProviderService
+
+<MudThemeProvider 
+    IsDarkMode="_themeProviderService.IsDarkMode"
+    IsDarkModeChanged="StateHasChanged"
+    @ref="_themeProviderService.ThemeProvider" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <NavMenu />    
+    <MudMainContent Class="ma-10">
+        @Body
+    </MudMainContent>
+</MudLayout>

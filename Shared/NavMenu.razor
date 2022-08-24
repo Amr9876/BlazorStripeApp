@@ -1,0 +1,33 @@
+﻿@inject ThemeProviderService _themeProviderService
+@inject NavigationManager _navManager
+
+<MudAppBar Elevation="0">
+    <MudLink 
+        Href="/" 
+        Underline="Underline.None"
+        Color="Color.Inherit"
+        Typo="Typo.h3">STRIPE</MudLink>
+    <MudSpacer />
+    <MudLink 
+        Href="/checkout" 
+        Underline="Underline.None"
+        Color="Color.Inherit"
+        Typo="Typo.h5">CHECKOUT</MudLink>
+    <MudSpacer />
+    <MudToggleIconButton        
+        Icon="@Icons.Material.Filled.ModeNight" 
+        Color="Color.Inherit"
+        ToggledIcon="@Icons.Material.Filled.WbSunny"
+        ToggledColor="Color.Warning"
+        ToggledChanged="async () => await Toggle()"
+        Toggled="_themeProviderService.IsDarkMode"/>
+    <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/Amr9876" Target="_blank" />
+</MudAppBar>
+
+@code {
+    async Task Toggle() 
+    {
+        _themeProviderService.ToggleDarkMode();
+        await _themeProviderService.ThemeProvider.IsDarkModeChanged.InvokeAsync();
+    }
+}
